@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+# temp file init
+RAWPROBES=$(mktemp /tmp/tmp.XXXXXXXXXXX)
+
+echo -n "User ID to shame: "
+read -r targetusr
+echo "Calculating..."
+
+function scanProbes {
+    curl -s "https://forums.somethingawful.com/banlist.php?userid=$targetusr" > "$RAWPROBES"
+}
