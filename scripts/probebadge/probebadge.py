@@ -3,6 +3,7 @@ import requests
 import html2text
 from bs4 import BeautifulSoup
 import re
+import os
 
 
 # set headers
@@ -25,6 +26,7 @@ months = 0
 years  = 0
 
 output = ''
+scriptPath = os.path.dirname(__file__)
 
 # query leper's colony
 
@@ -77,11 +79,11 @@ for sentence in probeTimes:
         else:
             output += str(sentence)
 
-uNameFont = ImageFont.truetype("F25_Bank_Printer.ttf", 16)
-timeFont = ImageFont.truetype("F25_Bank_Printer.ttf", 12)
-noteFont = ImageFont.truetype("F25_Bank_Printer.ttf", 8)
+uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
+timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
+noteFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 8)
 
-img = Image.open('badgebg_simple.png')
+img = Image.open(f'{scriptPath}/badgebg_simple.png')
 
 image_editable = ImageDraw.Draw(img)
 image_editable.text((100,15), username, (0,0,0), font=uNameFont)
@@ -92,4 +94,4 @@ if calcYears > 1:
 
 image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
-img.save('probebadge.png')
+img.save(f'{scriptPath}/probebadge.png')
