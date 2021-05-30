@@ -52,7 +52,8 @@ def generateBadge(userid):
         horribleJerk = userid
     except ValueError:
         print("UserIDs can only be integers.")
-        quit()
+        return
+    print(f'{scriptPath}/badges/{horribleJerk}.png')
     URL = f"https://forums.somethingawful.com/banlist.php?userid={horribleJerk}"
     page = requests.get(URL, headers)
     soup = BeautifulSoup(page.content, 'html.parser')
