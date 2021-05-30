@@ -125,7 +125,7 @@ def generateBadge(userid):
 
 @app.route('/', methods=['GET'])
 def home():
-    return flask.render_template(f'{scriptPath}/badgeform.html')
+    return '<html><body>User id here idiot: <form action="https://sa-probebadge.herokuapp.com/api/probebadge" method="GET"><input type="text" name="userid"/><input type="submit"/></form></body><html>'
  
 @app.route('/api/probebadge', methods=['POST', 'GET'])
 def api_genbadge():
