@@ -18,6 +18,7 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 ids = {'userid': 0}
+scriptPath = os.path.dirname(__file__)
 
 def generateBadge(userid):
     # set headers
@@ -40,7 +41,8 @@ def generateBadge(userid):
     years  = 0
 
     output = ''
-    scriptPath = os.path.dirname(__file__)
+    print(scriptPath)
+    print(f'{scriptPath}test')
 
     # cache requests to prevent Shenanigans
     requests_cache.install_cache('sa_cache', backend='sqlite', expire_after=21600)
@@ -50,7 +52,8 @@ def generateBadge(userid):
         horribleJerk = userid
     except ValueError:
         print("UserIDs can only be integers.")
-        quit()
+        return
+    print(f'{scriptPath}/badges/{horribleJerk}.png')
     URL = f"https://forums.somethingawful.com/banlist.php?userid={horribleJerk}"
     page = requests.get(URL, headers)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -99,11 +102,11 @@ def generateBadge(userid):
             else:
                 output += str(sentence)
 
-    uNameFont = ImageFont.truetype(f"{scriptPath}\\F25_Bank_Printer.ttf", 16)
-    timeFont = ImageFont.truetype(f"{scriptPath}\\F25_Bank_Printer.ttf", 12)
-    noteFont = ImageFont.truetype(f"{scriptPath}\\F25_Bank_Printer.ttf", 8)
+    uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
+    timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
+    noteFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 8)
 
-    img = Image.open(f'{scriptPath}\\badgebg_simple.png')
+    img = Image.open(f'{scriptPath}/badgebg_simple.png')
 
     image_editable = ImageDraw.Draw(img)
     image_editable.text((100,15), username, (0,0,0), font=uNameFont)
@@ -114,20 +117,21 @@ def generateBadge(userid):
 
     image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
-    img.save(f'{scriptPath}\\badges\\{horribleJerk}.png')
+    img.save(f'{scriptPath}/badges/{horribleJerk}.png')
+    print(f'{scriptPath}/badges/{horribleJerk}.png')
     return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
     #return f'<img src="{scriptPath}\\badges\\{horribleJerk}.png">'
 
 
 @app.route('/', methods=['GET'])
 def home():
-    return "<center><p>piss off</p></center>"
+    return flask.render_template(f'{scriptPath}/badgeform.html')
  
-@app.route('/api/probebadge', methods=['GET'])
+@app.route('/api/probebadge', methods=['POST', 'GET'])
 def api_genbadge():
     if 'userid' not in flask.request.args:
         return "No UserID provided. Get better at computers, loser."
     else:
-        return (generateBadge(int(flask.request.args['userid'])))
+        return (generateBadge(int(flask.request.args['userid']))), 201, {'Access-Control-Max-Age': '3600'}
  
-app.run()
+app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
