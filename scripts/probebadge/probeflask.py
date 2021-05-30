@@ -135,6 +135,6 @@ def api_genbadge():
         else:
             return (generateBadge(int(flask.request.args['userid']))), 201, {'Access-Control-Max-Age': '3600'}
     except (ValueError):
-        return '<h1>bitch does that look like a number to you</h1>'
+        return '<h1>handle <i>this</i> you fucking charlatan</h1><br/><img src="http://goatse.info/hello.jpg">'
  
 app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
