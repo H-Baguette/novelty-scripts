@@ -3,7 +3,7 @@ import requests
 try:
     import requests_cache
 except ImportError:
-    from requests_toolbelt import requests_cache
+    from site_packages import requests_cache
 import html2text
 from bs4 import BeautifulSoup
 import re
