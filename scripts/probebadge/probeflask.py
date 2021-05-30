@@ -125,7 +125,7 @@ def generateBadge(userid):
 
 @app.route('/', methods=['GET'])
 def home():
-    return "<center><p>piss off</p></center>"
+    return render_template('badgeform.html')
  
 @app.route('/api/probebadge', methods=['GET'])
 def api_genbadge():
