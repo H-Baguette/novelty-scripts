@@ -41,6 +41,7 @@ def generateBadge(userid):
 
     output = ''
     scriptPath = os.path.dirname(__file__)
+    print(scriptPath)
 
     # cache requests to prevent Shenanigans
     requests_cache.install_cache('sa_cache', backend='sqlite', expire_after=21600)
