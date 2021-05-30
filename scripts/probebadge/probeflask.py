@@ -127,11 +127,11 @@ def generateBadge(userid):
 def home():
     return flask.render_template(f'{scriptPath}/badgeform.html')
  
-@app.route('/api/probebadge', methods=['GET'])
+@app.route('/api/probebadge', methods=['POST', 'GET'])
 def api_genbadge():
     if 'userid' not in flask.request.args:
         return "No UserID provided. Get better at computers, loser."
     else:
-        return (generateBadge(int(flask.request.args['userid'])))
+        return (generateBadge(int(flask.request.args['userid']))), 201, {'Access-Control-Max-Age': '3600'}
  
 app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
