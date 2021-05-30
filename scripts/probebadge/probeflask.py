@@ -117,6 +117,7 @@ def generateBadge(userid):
     image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
     img.save(f'{scriptPath}/badges/{horribleJerk}.png')
+    print(f'{scriptPath}/badges/{horribleJerk}.png')
     return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
     #return f'<img src="{scriptPath}\\badges\\{horribleJerk}.png">'
 
