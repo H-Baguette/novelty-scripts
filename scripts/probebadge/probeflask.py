@@ -15,7 +15,7 @@ import os
 import sys
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+app.config["DEBUG"] = False
 
 ids = {'userid': 0}
 scriptPath = os.path.dirname(__file__)
