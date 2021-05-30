@@ -3,7 +3,7 @@ import requests
 try:
     import requests_cache
 except ImportError:
-    from requests-toolbelt import requests_cache
+    from site_packages import requests_cache
 import html2text
 from bs4 import BeautifulSoup
 import re
@@ -90,11 +90,11 @@ for sentence in probeTimes:
         else:
             output += str(sentence)
 
-uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
-timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
-noteFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 8)
+uNameFont = ImageFont.truetype(f"{scriptPath}F25_Bank_Printer.ttf", 16)
+timeFont = ImageFont.truetype(f"{scriptPath}F25_Bank_Printer.ttf", 12)
+noteFont = ImageFont.truetype(f"{scriptPath}F25_Bank_Printer.ttf", 8)
 
-img = Image.open(f'{scriptPath}/badgebg_simple.png')
+img = Image.open(f'{scriptPath}badgebg_simple.png')
 
 image_editable = ImageDraw.Draw(img)
 image_editable.text((100,15), username, (0,0,0), font=uNameFont)
@@ -104,6 +104,5 @@ if calcYears > 1:
     image_editable.text((100,62), 'Jesus Christ.', (0,0,0), font=timeFont)
 
 image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
-#image_editable.text((375,60), f'Last updated: ', (150,150,150), font=timeFont)
 
-img.save(f'{scriptPath}/probebadge.png')
+img.save(f'{scriptPath}badges/{horribleJerk}.png')
