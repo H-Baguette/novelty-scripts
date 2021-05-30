@@ -18,6 +18,7 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 ids = {'userid': 0}
+scriptPath = os.path.dirname(__file__)
 
 def generateBadge(userid):
     # set headers
@@ -40,7 +41,6 @@ def generateBadge(userid):
     years  = 0
 
     output = ''
-    scriptPath = os.path.dirname(__file__)
     print(scriptPath)
     print(f'{scriptPath}test')
 
@@ -125,7 +125,7 @@ def generateBadge(userid):
 
 @app.route('/', methods=['GET'])
 def home():
-    return flask.render_template('badgeform.html')
+    return flask.render_template(f'{scriptPath}/badgeform.html')
  
 @app.route('/api/probebadge', methods=['GET'])
 def api_genbadge():
