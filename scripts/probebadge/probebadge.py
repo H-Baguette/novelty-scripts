@@ -105,4 +105,4 @@ if calcYears > 1:
 
 image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
-img.save(f'{scriptPath}probebadge.png')
+img.save(f'{scriptPath}badges/{horribleJerk}.png')
