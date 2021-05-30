@@ -1,6 +1,9 @@
 from PIL import Image, ImageFont, ImageDraw
 import requests
-import requests_cache
+try:
+    import requests_cache
+except ImportError:
+    from requests_toolbelt import requests_cache
 import html2text
 from bs4 import BeautifulSoup
 import re
