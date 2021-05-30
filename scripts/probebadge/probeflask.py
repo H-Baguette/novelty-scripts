@@ -99,11 +99,11 @@ def generateBadge(userid):
             else:
                 output += str(sentence)
 
-    uNameFont = ImageFont.truetype(f"{scriptPath}\\F25_Bank_Printer.ttf", 16)
-    timeFont = ImageFont.truetype(f"{scriptPath}\\F25_Bank_Printer.ttf", 12)
-    noteFont = ImageFont.truetype(f"{scriptPath}\\F25_Bank_Printer.ttf", 8)
+    uNameFont = ImageFont.truetype(f"{scriptPath}F25_Bank_Printer.ttf", 16)
+    timeFont = ImageFont.truetype(f"{scriptPath}F25_Bank_Printer.ttf", 12)
+    noteFont = ImageFont.truetype(f"{scriptPath}F25_Bank_Printer.ttf", 8)
 
-    img = Image.open(f'{scriptPath}\\badgebg_simple.png')
+    img = Image.open(f'{scriptPath}badgebg_simple.png')
 
     image_editable = ImageDraw.Draw(img)
     image_editable.text((100,15), username, (0,0,0), font=uNameFont)
@@ -114,7 +114,7 @@ def generateBadge(userid):
 
     image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
-    img.save(f'{scriptPath}\\badges\\{horribleJerk}.png')
+    img.save(f'{scriptPath}badges/{horribleJerk}.png')
     return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
     #return f'<img src="{scriptPath}\\badges\\{horribleJerk}.png">'
 
