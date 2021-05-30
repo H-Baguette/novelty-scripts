@@ -1,1 +1,1 @@
-web: chmod +x deploy.sh && ./deploy.sh
+web: python scripts/probebadge/probeflask.py
