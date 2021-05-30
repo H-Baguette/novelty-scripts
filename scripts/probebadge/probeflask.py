@@ -1,6 +1,6 @@
 try:
     import flask
-except ImportError, ModuleNotFoundError:
+except (ImportError, ModuleNotFoundError):
     from site_packages import flask
 from PIL import Image, ImageFont, ImageDraw
 import requests
