@@ -1,5 +1,6 @@
 from PIL import Image, ImageFont, ImageDraw
 import requests
+import requests_cache
 import html2text
 from bs4 import BeautifulSoup
 import re
@@ -28,6 +29,9 @@ years  = 0
 
 output = ''
 scriptPath = os.path.dirname(__file__)
+
+# cache requests to prevent Shenanigans
+requests_cache.install_cache('sa_cache', backend='sqlite', expire_after=21600)
 
 # query leper's colony
 try:
