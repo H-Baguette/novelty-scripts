@@ -4,6 +4,7 @@ import html2text
 from bs4 import BeautifulSoup
 import re
 import os
+import sys
 
 
 # set headers
@@ -29,8 +30,11 @@ output = ''
 scriptPath = os.path.dirname(__file__)
 
 # query leper's colony
-
-horribleJerk = 227624
+try:
+    horribleJerk = int(sys.argv[1])
+except ValueError:
+    print("UserIDs can only be integers.")
+    quit()
 URL = f"https://forums.somethingawful.com/banlist.php?userid={horribleJerk}"
 page = requests.get(URL, headers)
 soup = BeautifulSoup(page.content, 'html.parser')
