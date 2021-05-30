@@ -1,0 +1,6 @@
+bs4==0.0.1
+Flask==2.0.1
+html2text==2020.1.16
+Pillow==8.2.0
+requests==2.25.1
+requests-cache==0.6.3
