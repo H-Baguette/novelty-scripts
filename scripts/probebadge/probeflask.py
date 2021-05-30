@@ -130,4 +130,4 @@ def api_genbadge():
     else:
         return (generateBadge(int(flask.request.args['userid'])))
  
-app.run()
+app.run(host='0.0.0.0')
