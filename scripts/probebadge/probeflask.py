@@ -1,4 +1,7 @@
-import flask
+try:
+    import flask
+except ImportError:
+    from site_packages import flask
 from PIL import Image, ImageFont, ImageDraw
 import requests
 try:
