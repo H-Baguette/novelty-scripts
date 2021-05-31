@@ -54,15 +54,25 @@ def generateBadge(userid):
         print("UserIDs can only be integers.")
         return
     print(f'{scriptPath}/badges/{horribleJerk}.png')
-    URL = f"https://forums.somethingawful.com/banlist.php?userid={horribleJerk}"
-    page = requests.get(URL, headers)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    #print(soup.prettify())
+    pageNum = 1
+    probes=[]
+    endOfSheet = False
+    until endOfSheet = True:
+        URL = f"https://forums.somethingawful.com/banlist.php?&sort=&asc=0&adminid=&ban_month=0&ban_year=0&actfilt=-1&userid={horribleJerk}&pagenumber={str(pageNum)}"
+        page = requests.get(URL, headers)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        #print(soup.prettify())
+        
+        if page.content.count('User loses posting privileges for') == 0:
+            endOfSheet = True
+            return
 
-    username = str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text())
+        username = str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text())
 
-    # find probations
-    probes = re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify())
+        # find probations
+        probeScrape = re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify())
+        probes += probeScrape
+        pageNum += 1
     #print(probes)
 
     # YES YES I KNOW IM GOING TO TIDY THIS WHEN I KNOW IT WORKS
