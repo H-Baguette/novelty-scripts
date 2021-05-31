@@ -78,7 +78,7 @@ def generateBadge(userid):
     #print(probes)
 
     # YES YES I KNOW IM GOING TO TIDY THIS WHEN I KNOW IT WORKS
-    elapsed = timedelta(months=0,weeks=0,days=0,hours=0)
+    elapsed = timedelta(weeks=0,days=0,hours=0)
     for probe in probes:
         timesplit = probe.split(' ')
         timesplit[0] = re.sub('[^0-9]','',timesplit[0])
@@ -86,7 +86,7 @@ def generateBadge(userid):
         if   'hours' in unit: elapsed += timedelta(hours = value)
         elif 'day'   in unit: elapsed += timedelta(days  = value)
         elif 'week'  in unit: elapsed += timedelta(weeks = value)
-        elif 'month' in unit: elapsed += timedelta(month = value)
+        elif 'month' in unit: elapsed += timedelta(weeks = (value * 4))
         #elif 'year'  in unit: elapsed += timedelta(years = value)
     output = ([str(x[0]) + ' ' + x[1] for x in [(elapsed.years,  'Years'),
                                           (elapsed.months, 'Months'),
