@@ -50,6 +50,13 @@ def generateBadge(userid):
 
     # cache requests to prevent Shenanigans
     requests_cache.install_cache('sa_cache', backend='sqlite', expire_after=21600)
+    
+    # if the last query was less than 6 hours ago, send a cached image
+    if os.path.exists(f'{scriptPath}/badges/{horribleJerk}.png'):
+        print(str(time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')))
+        if (time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')) < 21600:
+            print('SENDING CACHED IMAGE')
+            return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
 
     # query leper's colony
     try:
@@ -100,11 +107,6 @@ def generateBadge(userid):
     if output == '':
         output = 'This SQUARE hasn\'t been probated before.'
     
-    if os.path.exists(f'{scriptPath}/badges/{horribleJerk}.png'):
-        print(str(time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')))
-        if (time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')) < 21600:
-            print('SENDING CACHED IMAGE')
-            return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
     print('GENERATING NEW BADGE')
     uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
     timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
