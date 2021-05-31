@@ -18,6 +18,13 @@
 			font-family: 'VT323';
 			font-size:0.9em;
 		}
+		
+		div {
+			width:70%;
+			border-image-source: url("{{url_for('static', filename='marquee.gif')}}");
+			border-image-slice: 30 fill;
+			background-color:grey;
+		}
 	</style>
 	
 	<!--<script src="scripts/howler.js/dist/howler.js"></script>-->
@@ -34,7 +41,7 @@
 		<img src="https://i.imgur.com/PISLmiA.png">
 		<p style="color:white;"><b>Show everyone what a prick you are!</b></p>
 		
-		<div style="width:70%;background-color:grey;">
+		<div>
 			<p><b>User ID here idiot (NOT your username):</b></p>
 			<form action="https://sa-probebadge.herokuapp.com/api/probebadge" method="GET">
 				<input type="text" name="userid"/>
