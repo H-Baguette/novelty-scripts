@@ -20,17 +20,11 @@
 		}
 	</style>
 	
-	<script src="scripts/howler.js/dist/howler.js"></script>
+	<!--<script src="scripts/howler.js/dist/howler.js"></script>-->
 	<script>
-		var bgmusic = new Howl({
-			src: ["{{url_for('static', filename='lain.mp3')}}"],
-			autoplay: true,
-			volume:75,
-			loop:true
-		});
-		bgmusic.play();
+		var audio = new Audio("{{url_for('static', filename='lain.mp3')}}");
 		window.onload = function() {
-			bgmusic.play();
+			audio.play();
 		}
 	</script>
 	
