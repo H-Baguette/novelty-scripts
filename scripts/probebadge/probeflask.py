@@ -88,12 +88,11 @@ def generateBadge(userid):
         elif 'week'  in unit: elapsed += timedelta(weeks = value)
         elif 'month' in unit: elapsed += timedelta(month = value)
         elif 'year'  in unit: elapsed += timedelta(years = value)
-    output = 
-        [str(x[0]) + ' ' + x[1] for x in [(elapsed.years,  'Years'),
+    output = ([str(x[0]) + ' ' + x[1] for x in [(elapsed.years,  'Years'),
                                           (elapsed.months, 'Months'),
                                           (elapsed.weeks,  'Weeks'),
                                           (elapsed.days,   'Days'),
-                                          (elapsed.hours,  'Hours')] if x[0] != 0].join(', ')
+                                          (elapsed.hours,  'Hours')] if x[0] != 0].join(', '))
     
     if output == '':
         output = 'This SQUARE hasn\'t been probated before.'
