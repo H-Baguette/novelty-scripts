@@ -4,3 +4,4 @@ html2text==2020.1.16
 Pillow==8.2.0
 requests==2.25.1
 requests-cache==0.6.3
+humanize==3.6.0

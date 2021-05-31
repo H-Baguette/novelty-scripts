@@ -10,7 +10,8 @@ except ImportError:
     from site_packages import requests_cache
 import html2text
 from bs4 import BeautifulSoup
-from datetime import timedelta
+import datetime as dt
+import humanize
 import re
 import os
 import sys
@@ -35,11 +36,11 @@ def generateBadge(userid):
     h.ignore_links = True
 
     # init counters
-    hours  = 0
-    days   = 0
-    weeks  = 0
-    months = 0
-    years  = 0
+    phours  = 0
+    pdays   = 0
+    pweeks  = 0
+    pmonths = 0
+    pyears  = 0
 
     username = 'A Goody Two-Shoes'
     output = ''
@@ -78,21 +79,21 @@ def generateBadge(userid):
     #print(probes)
 
     # YES YES I KNOW IM GOING TO TIDY THIS WHEN I KNOW IT WORKS
-    elapsed = timedelta(weeks=0,days=0,hours=0)
     for probe in probes:
         timesplit = probe.split(' ')
         timesplit[0] = re.sub('[^0-9]','',timesplit[0])
-        (unit, value) = (timesplit[1], int(timesplit[0]))
-        if   'hours' in unit: elapsed += timedelta(hours = value)
-        elif 'day'   in unit: elapsed += timedelta(days  = value)
-        elif 'week'  in unit: elapsed += timedelta(weeks = value)
-        elif 'month' in unit: elapsed += timedelta(weeks = (value * 4))
-        #elif 'year'  in unit: elapsed += timedelta(years = value)
-    output = ([str(x[0]) + ' ' + x[1] for x in [(elapsed.years,  'Years'),
-                                          (elapsed.months, 'Months'),
-                                          (elapsed.weeks,  'Weeks'),
-                                          (elapsed.days,   'Days'),
-                                          (elapsed.hours,  'Hours')] if x[0] != 0].join(', '))
+        if timesplit[1] == 'hours':
+            phours += int(timesplit[0])
+        elif timesplit[1][0:3] == 'day':
+            pdays += int(timesplit[0])
+        elif timesplit[1][0:4] == 'week':
+            pweeks += int(timesplit[0])
+        elif timesplit[1][0:5] == 'month':
+            pmonths += int(timesplit[0])
+        elif timesplit[1][0:4] == 'year':
+            pyears += int(timesplit[0])
+    
+    output = humanize.naturaldelta(dt.timedelta(hours=phours,days=pdays,weeks=pweeks,months=pmonths,years=pyears))
     
     if output == '':
         output = 'This SQUARE hasn\'t been probated before.'
