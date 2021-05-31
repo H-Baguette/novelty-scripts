@@ -10,6 +10,8 @@ except ImportError:
     from site_packages import requests_cache
 import html2text
 from bs4 import BeautifulSoup
+import datetime as dt
+import humanize
 import re
 import os
 import sys
@@ -34,11 +36,11 @@ def generateBadge(userid):
     h.ignore_links = True
 
     # init counters
-    hours  = 0
-    days   = 0
-    weeks  = 0
-    months = 0
-    years  = 0
+    phours  = 0
+    pdays   = 0
+    pweeks  = 0
+    pmonths = 0
+    pyears  = 0
 
     username = 'A Goody Two-Shoes'
     output = ''
@@ -81,37 +83,18 @@ def generateBadge(userid):
         timesplit = probe.split(' ')
         timesplit[0] = re.sub('[^0-9]','',timesplit[0])
         if timesplit[1] == 'hours':
-            hours += int(timesplit[0])
+            phours += int(timesplit[0])
         elif timesplit[1][0:3] == 'day':
-            days += int(timesplit[0])
+            pdays += int(timesplit[0])
         elif timesplit[1][0:4] == 'week':
-            weeks += int(timesplit[0])
+            pweeks += int(timesplit[0])
         elif timesplit[1][0:5] == 'month':
-            months += int(timesplit[0])
+            pmonths += int(timesplit[0])
         elif timesplit[1][0:4] == 'year':
-            years += int(timesplit[0])
+            pyears += int(timesplit[0])
+    
+    output = humanize.naturaldelta(dt.timedelta(hours=phours,days=(pdays + (365 * pyears)),weeks=(pweeks + (4 * pmonths))))
 
-    # boring, frustrating math shit
-    calcHours = int(hours % 24)
-    calcDays = int((hours - calcHours) / 24)
-    calcWeeks = int((calcDays - (calcDays % 7)) / 7)
-    calcDays = int(calcDays % 7)
-    calcMonths = int((calcWeeks - (calcWeeks % 4)) / 4)
-    calcWeeks = int(calcWeeks % 4)
-    calcYears = int((calcMonths - (calcMonths % 12)) / 12)
-    calcMonths = int(calcMonths % 12)
-
-    print(f'\nHours: {calcHours}\nDays: {calcDays}\nWeeks: {calcWeeks}\nMonths: {calcMonths}\nYears: {calcYears}')
-    #print(h.handle(page))
-
-    # figure out what to stick on the badge
-    probeTimes = [(str(calcYears) + ' Years'),(str(calcMonths) + ' Months'),(str(calcWeeks) + ' Weeks'),(str(calcDays) + ' Days'),(str(calcHours) + ' Hours')]
-    for sentence in probeTimes:
-        if int(re.sub('[^0-9]','',sentence)) > 0:
-            if output != '':
-                output += f', {str(sentence)}'
-            else:
-                output += str(sentence)
     
     if output == '':
         output = 'This SQUARE hasn\'t been probated before.'
@@ -126,8 +109,8 @@ def generateBadge(userid):
     image_editable.text((100,15), username, (0,0,0), font=uNameFont)
     image_editable.text((100,35), 'Total time probated:', (0,0,0), font=timeFont)
     image_editable.text((100,50), output, (0,0,0), font=timeFont)
-    if calcYears > 1:
-        image_editable.text((100,62), 'Jesus Christ.', (0,0,0), font=timeFont)
+    #if calcYears > 1:
+    #    image_editable.text((100,62), 'Jesus Christ.', (0,0,0), font=timeFont)
 
     #image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
