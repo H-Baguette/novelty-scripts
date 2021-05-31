@@ -11,8 +11,12 @@
 			background-image:url('images/button.png');
 			background-size:cover;
 			font-family: 'VT323';
-			font-size: 1.5em;
+			font-size: 1em;
 			color:black;
+		}
+		input[type=text] {
+			font-family: 'VT323';
+			font-size:0.9em;
 		}
 	</style>
 </head>
@@ -20,7 +24,7 @@
 	<center>
 		<img src="https://i.imgur.com/PISLmiA.png">
 		<p>Show everyone what a prick you are!</p>
-		<p>User ID here idiot (NOT your username):</p>
+		<p><b>User ID here idiot (NOT your username):</b></p>
 		<form action="https://sa-probebadge.herokuapp.com/api/probebadge" method="GET">
 			<input type="text" name="userid"/>
 			<input type="submit"/>
