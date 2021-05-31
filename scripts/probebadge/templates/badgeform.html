@@ -1,0 +1,53 @@
+<html>
+<head>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=VT323');
+		
+		body {
+			font-family: "Comic Sans MS", "Comic Sans";
+			font-size: 1.5em;
+		}
+		input[type=submit] {
+			background-image:url('images/button.png');
+			background-size:cover;
+			font-family: 'VT323';
+			font-size: 1em;
+			color:black;
+		}
+		input[type=text] {
+			font-family: 'VT323';
+			font-size:0.9em;
+		}
+		
+		div {
+			width:70%;
+			background-image:url("{{url_for('static', filename='rainbow.gif')}}");
+			background-size:cover;
+		}
+	</style>
+	
+	<!--<script src="scripts/howler.js/dist/howler.js"></script>-->
+	<script>
+		var audio = new Audio("{{url_for('static', filename='lain.mp3')}}");
+		window.onload = function() {
+			audio.play();
+		}
+	</script>
+	
+</head>
+<body style="background-image:url('https://anlucas.neocities.org/tealmarble.gif');background-size:repeat;">
+	<center>
+		<img src="https://i.imgur.com/PISLmiA.png">
+		<p style="color:white;"><b>Show everyone what a prick you are!</b></p>
+		
+		<div style="border: 5px solid black;">
+			<p><b>User ID here idiot (NOT your username):</b></p>
+			<form action="https://sa-probebadge.herokuapp.com/api/probebadge" method="GET">
+				<input type="text" name="userid"/>
+				<input type="submit"/>
+			</form>
+			<p style="color:red;"><b>MAKE SURE YOU WRAP THE URL YOU\'RE GIVEN IN [IMG] TAGS!</b></p>
+		</div>
+	</center>
+</body>
+</html>
