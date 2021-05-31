@@ -24,7 +24,7 @@
 	<script>
 		// load audio
 		var bgmusic = new Howl({
-			src: ['music/lain.mp3'],
+			src: ["{{url_for('static', filename='lain.mp3')}}"],
 			volume:75,
 			loop:true
 		});
