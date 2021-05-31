@@ -47,6 +47,13 @@ def generateBadge(userid):
     output = ''
     print(scriptPath)
     print(f'{scriptPath}test')
+    
+    
+    try:
+        horribleJerk = userid
+    except ValueError:
+        print("UserIDs can only be integers.")
+        return
 
     # cache requests to prevent Shenanigans
     requests_cache.install_cache('sa_cache', backend='sqlite', expire_after=21600)
@@ -59,11 +66,6 @@ def generateBadge(userid):
             return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
 
     # query leper's colony
-    try:
-        horribleJerk = userid
-    except ValueError:
-        print("UserIDs can only be integers.")
-        return
     print(f'{scriptPath}/badges/{horribleJerk}.png')
     pageNum = 1
     probes=[]
