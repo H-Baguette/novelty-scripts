@@ -10,7 +10,7 @@ except ImportError:
     from site_packages import requests_cache
 import html2text
 from bs4 import BeautifulSoup
-import datetime
+from datetime import timedelta
 import re
 import os
 import sys
