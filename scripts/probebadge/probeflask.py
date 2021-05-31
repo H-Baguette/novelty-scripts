@@ -40,6 +40,7 @@ def generateBadge(userid):
     months = 0
     years  = 0
 
+    username = 'A Goody Two-Shoes'
     output = ''
     print(scriptPath)
     print(f'{scriptPath}test')
