@@ -15,7 +15,7 @@ import os
 import sys
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = False
+app.config["DEBUG"] = True
 
 ids = {'userid': 0}
 scriptPath = os.path.dirname(__file__)
@@ -40,6 +40,7 @@ def generateBadge(userid):
     months = 0
     years  = 0
 
+    username = 'A Goody Two-Shoes'
     output = ''
     print(scriptPath)
     print(f'{scriptPath}test')
@@ -54,15 +55,25 @@ def generateBadge(userid):
         print("UserIDs can only be integers.")
         return
     print(f'{scriptPath}/badges/{horribleJerk}.png')
-    URL = f"https://forums.somethingawful.com/banlist.php?userid={horribleJerk}"
-    page = requests.get(URL, headers)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    #print(soup.prettify())
+    pageNum = 1
+    probes=[]
+    endOfSheet = False
+    while endOfSheet != True:
+        URL = f"https://forums.somethingawful.com/banlist.php?&sort=&asc=0&adminid=&ban_month=0&ban_year=0&actfilt=-1&userid={horribleJerk}&pagenumber={str(pageNum)}"
+        page = requests.get(URL, headers)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        #print(soup.prettify())
+        
+        if re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify()) == []:
+            endOfSheet = True
+            break
 
-    username = str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text())
+        username = str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text())
 
-    # find probations
-    probes = re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify())
+        # find probations
+        probeScrape = re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify())
+        probes += probeScrape
+        pageNum += 1
     #print(probes)
 
     # YES YES I KNOW IM GOING TO TIDY THIS WHEN I KNOW IT WORKS
@@ -101,6 +112,9 @@ def generateBadge(userid):
                 output += f', {str(sentence)}'
             else:
                 output += str(sentence)
+    
+    if output == '':
+        output = 'This SQUARE hasn\'t been probated before.'
 
     uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
     timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
@@ -110,12 +124,12 @@ def generateBadge(userid):
 
     image_editable = ImageDraw.Draw(img)
     image_editable.text((100,15), username, (0,0,0), font=uNameFont)
-    image_editable.text((100,35), 'Total time probated*:', (0,0,0), font=timeFont)
+    image_editable.text((100,35), 'Total time probated:', (0,0,0), font=timeFont)
     image_editable.text((100,50), output, (0,0,0), font=timeFont)
     if calcYears > 1:
         image_editable.text((100,62), 'Jesus Christ.', (0,0,0), font=timeFont)
 
-    image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
+    #image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
     img.save(f'{scriptPath}/badges/{horribleJerk}.png')
     print(f'{scriptPath}/badges/{horribleJerk}.png')
@@ -125,7 +139,7 @@ def generateBadge(userid):
 
 @app.route('/', methods=['GET'])
 def home():
-    return '<html><body style="background-image:url(\'https://anlucas.neocities.org/compspin_e0.gif\');background-size:cover;"><p style="color:white;">User ID here idiot (NOT your username):</p><form action="https://sa-probebadge.herokuapp.com/api/probebadge" method="GET"><input type="text" name="userid"/><input type="submit"/></form></body><html>'
+    return '<html><body style="background-image:url(\'https://anlucas.neocities.org/compspin_e0.gif\');background-size:cover;"><p style="color:white;">User ID here idiot (NOT your username):</p><form action="https://probebadge-dev.herokuapp.com/api/probebadge" method="GET"><input type="text" name="userid"/><input type="submit"/></form><p style="color:white;"><b>MAKE SURE YOU WRAP THE URL YOU\'RE GIVEN IN [IMG] TAGS!</b></p></body><html>'
  
 @app.route('/api/probebadge', methods=['POST', 'GET'])
 def api_genbadge():
@@ -135,6 +149,6 @@ def api_genbadge():
         else:
             return (generateBadge(int(flask.request.args['userid']))), 201, {'Access-Control-Max-Age': '3600'}
     except (ValueError, AttributeError):
-        return '<h1>handle <i>this</i> you fucking charlatan</h1><br/><img src="http://goatse.info/hello.jpg">'
+        return '<center><h1>Invalid UserID</h1><p>You <i>did</i> enter your UserID, and not your username, <i>right?</i></p><br/><img src="https://i.imgur.com/l0wWcPl.png"></center>'
  
 app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
