@@ -63,7 +63,7 @@ def generateBadge(userid):
         soup = BeautifulSoup(page.content, 'html.parser')
         #print(soup.prettify())
         
-        if page.content.count('User loses posting privileges for') == 0:
+        if re.findall(r'User loses posting privileges for') == []:
             endOfSheet = True
             return
 
