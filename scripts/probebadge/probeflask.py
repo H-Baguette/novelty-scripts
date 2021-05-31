@@ -101,9 +101,11 @@ def generateBadge(userid):
         output = 'This SQUARE hasn\'t been probated before.'
     
     if os.path.exists(f'{scriptPath}/badges/{horribleJerk}.png'):
+        print(str(time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')))
         if (time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')) < 21600:
+            print('SENDING CACHED IMAGE')
             return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
-
+    print('GENERATING NEW BADGE')
     uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
     timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
     noteFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 8)
