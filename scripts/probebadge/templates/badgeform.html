@@ -23,7 +23,6 @@
 			width:70%;
 			background-image:url("{{url_for('static', filename='rainbow.gif')}}");
 			background-size:cover;
-			border: 5px solid black;
 		}
 	</style>
 	
@@ -41,7 +40,7 @@
 		<img src="https://i.imgur.com/PISLmiA.png">
 		<p style="color:white;"><b>Show everyone what a prick you are!</b></p>
 		
-		<div>
+		<div style="border: 5px solid black;">
 			<p><b>User ID here idiot (NOT your username):</b></p>
 			<form action="https://sa-probebadge.herokuapp.com/api/probebadge" method="GET">
 				<input type="text" name="userid"/>
