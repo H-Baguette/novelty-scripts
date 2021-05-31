@@ -57,7 +57,7 @@ def generateBadge(userid):
     pageNum = 1
     probes=[]
     endOfSheet = False
-    until endOfSheet = True:
+    while endOfSheet != True:
         URL = f"https://forums.somethingawful.com/banlist.php?&sort=&asc=0&adminid=&ban_month=0&ban_year=0&actfilt=-1&userid={horribleJerk}&pagenumber={str(pageNum)}"
         page = requests.get(URL, headers)
         soup = BeautifulSoup(page.content, 'html.parser')
