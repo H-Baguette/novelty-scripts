@@ -94,6 +94,7 @@ def generateBadge(userid):
             pyears += int(timesplit[0])
     
     output = humanize.naturaldelta(dt.timedelta(hours=phours,days=(pdays + (365 * pyears)),weeks=(pweeks + (4 * pmonths))))
+
     
     if output == '':
         output = 'This SQUARE hasn\'t been probated before.'
@@ -131,7 +132,6 @@ def api_genbadge():
         else:
             return (generateBadge(int(flask.request.args['userid']))), 201, {'Access-Control-Max-Age': '3600'}
     except (ValueError, AttributeError):
-        pass
-        #return '<center><h1>Invalid UserID</h1><p>You <i>did</i> enter your UserID, and not your username, <i>right?</i></p><br/><img src="https://i.imgur.com/l0wWcPl.png"></center>'
+        return '<center><h1>Invalid UserID</h1><p>You <i>did</i> enter your UserID, and not your username, <i>right?</i></p><br/><img src="https://i.imgur.com/l0wWcPl.png"></center>'
  
 app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
