@@ -20,7 +20,7 @@ app.config["DEBUG"] = True
 ids = {'userid': 0}
 scriptPath = os.path.dirname(__file__)
 
-def drawBadge(username, sentence):
+def drawBadge(horribleJerk, username, sentence):
     uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
     timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
     noteFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 8)
@@ -84,7 +84,7 @@ def generateBadge(userid):
         
         if re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify()) == []:
             endOfSheet = True
-            return drawBadge(str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text()), 'This SQUARE hasn\'t been probated before.')
+            return drawBadge(horribleJerk, str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text()), 'This SQUARE hasn\'t been probated before.')
 
         username = str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text())
 
@@ -134,7 +134,7 @@ def generateBadge(userid):
     if output == '':
         output = 'This SQUARE hasn\'t been probated before.'
     
-    return drawBadge(username,output)
+    return drawBadge(horribleJerk,username,output)
 
     #return f'<img src="{scriptPath}\\badges\\{horribleJerk}.png">'
 
