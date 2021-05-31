@@ -11,6 +11,7 @@ except ImportError:
 import html2text
 from bs4 import BeautifulSoup
 import datetime as dt
+import time
 import humanize
 import re
 import os
@@ -44,19 +45,25 @@ def generateBadge(userid):
 
     username = 'A Goody Two-Shoes'
     output = ''
-    print(scriptPath)
-    print(f'{scriptPath}test')
-
-    # cache requests to prevent Shenanigans
-    requests_cache.install_cache('sa_cache', backend='sqlite', expire_after=21600)
-
-    # query leper's colony
+    
+    
     try:
         horribleJerk = userid
     except ValueError:
         print("UserIDs can only be integers.")
         return
-    print(f'{scriptPath}/badges/{horribleJerk}.png')
+
+    # cache requests to prevent Shenanigans
+    requests_cache.install_cache('sa_cache', backend='sqlite', expire_after=21600)
+    
+    # if the last query was less than 6 hours ago, send a cached image
+    if os.path.exists(f'{scriptPath}/badges/{horribleJerk}.png'):
+        print(str(time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')))
+        if (time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')) < 21600:
+            print('SENDING CACHED IMAGE')
+            return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
+
+    # query leper's colony
     pageNum = 1
     probes=[]
     endOfSheet = False
@@ -98,7 +105,8 @@ def generateBadge(userid):
     
     if output == '':
         output = 'This SQUARE hasn\'t been probated before.'
-
+    
+    print('GENERATING NEW BADGE')
     uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
     timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
     noteFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 8)
@@ -115,7 +123,6 @@ def generateBadge(userid):
     #image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
     img.save(f'{scriptPath}/badges/{horribleJerk}.png')
-    print(f'{scriptPath}/badges/{horribleJerk}.png')
     return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
     #return f'<img src="{scriptPath}\\badges\\{horribleJerk}.png">'
 
