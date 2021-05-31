@@ -40,7 +40,7 @@ def generateBadge(userid):
     months = 0
     years  = 0
 
-    output = string or 'This SQUARE hasn\'t been probated before.'
+    output = ''
     print(scriptPath)
     print(f'{scriptPath}test')
 
@@ -111,6 +111,9 @@ def generateBadge(userid):
                 output += f', {str(sentence)}'
             else:
                 output += str(sentence)
+    
+    if output == '':
+        output = 'This SQUARE hasn\'t been probated before.'
 
     uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
     timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
