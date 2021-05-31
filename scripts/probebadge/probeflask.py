@@ -121,7 +121,7 @@ def generateBadge(userid):
 
 @app.route('/', methods=['GET'])
 def home():
-    return '<html><body style="background-image:url(\'https://anlucas.neocities.org/compspin_e0.gif\');background-size:cover;"><p style="color:white;">User ID here idiot (NOT your username):</p><form action="https://probebadge-dev.herokuapp.com/api/probebadge" method="GET"><input type="text" name="userid"/><input type="submit"/></form><p style="color:white;"><b>MAKE SURE YOU WRAP THE URL YOU\'RE GIVEN IN [IMG] TAGS!</b></p></body><html>'
+    return '<html><body style="background-image:url(\'https://anlucas.neocities.org/compspin_e0.gif\');background-size:cover;"><p style="color:white;">User ID here idiot (NOT your username):</p><form action="https://sa-probebadge.herokuapp.com/api/probebadge" method="GET"><input type="text" name="userid"/><input type="submit"/></form><p style="color:white;"><b>MAKE SURE YOU WRAP THE URL YOU\'RE GIVEN IN [IMG] TAGS!</b></p></body><html>'
  
 @app.route('/api/probebadge', methods=['POST', 'GET'])
 def api_genbadge():
