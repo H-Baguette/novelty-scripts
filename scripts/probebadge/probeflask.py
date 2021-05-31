@@ -124,12 +124,12 @@ def generateBadge(userid):
 
     image_editable = ImageDraw.Draw(img)
     image_editable.text((100,15), username, (0,0,0), font=uNameFont)
-    image_editable.text((100,35), 'Total time probated*:', (0,0,0), font=timeFont)
+    image_editable.text((100,35), 'Total time probated:', (0,0,0), font=timeFont)
     image_editable.text((100,50), output, (0,0,0), font=timeFont)
     if calcYears > 1:
         image_editable.text((100,62), 'Jesus Christ.', (0,0,0), font=timeFont)
 
-    image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
+    #image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
     img.save(f'{scriptPath}/badges/{horribleJerk}.png')
     print(f'{scriptPath}/badges/{horribleJerk}.png')
@@ -149,6 +149,6 @@ def api_genbadge():
         else:
             return (generateBadge(int(flask.request.args['userid']))), 201, {'Access-Control-Max-Age': '3600'}
     except (ValueError, AttributeError):
-        return '<h1>handle <i>this</i> you fucking charlatan</h1><br/><img src="http://goatse.info/hello.jpg">'
+        return '<center><h1>Invalid UserID</h1><p>You <i>did</i> enter your UserID, and not your username, <i>right?</i></p><br/><img src="https://i.imgur.com/l0wWcPl.png"></center>'
  
 app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
