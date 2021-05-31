@@ -108,8 +108,8 @@ def generateBadge(userid):
     image_editable.text((100,15), username, (0,0,0), font=uNameFont)
     image_editable.text((100,35), 'Total time probated:', (0,0,0), font=timeFont)
     image_editable.text((100,50), output, (0,0,0), font=timeFont)
-    if calcYears > 1:
-        image_editable.text((100,62), 'Jesus Christ.', (0,0,0), font=timeFont)
+    #if calcYears > 1:
+    #    image_editable.text((100,62), 'Jesus Christ.', (0,0,0), font=timeFont)
 
     #image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
 
