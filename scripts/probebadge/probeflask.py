@@ -20,25 +20,6 @@ app.config["DEBUG"] = True
 ids = {'userid': 0}
 scriptPath = os.path.dirname(__file__)
 
-def drawBadge(horribleJerk, username, calcYears, sentence):
-    uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
-    timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
-    noteFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 8)
-
-    img = Image.open(f'{scriptPath}/badgebg_simple.png')
-
-    image_editable = ImageDraw.Draw(img)
-    image_editable.text((100,15), username, (0,0,0), font=uNameFont)
-    image_editable.text((100,35), 'Total time probated*:', (0,0,0), font=timeFont)
-    image_editable.text((100,50), sentence, (0,0,0), font=timeFont)
-    if calcYears > 1:
-        image_editable.text((100,62), 'Jesus Christ.', (0,0,0), font=timeFont)
-
-    image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
-
-    img.save(f'{scriptPath}/badges/{horribleJerk}.png')
-    return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
-
 def generateBadge(userid):
     # set headers
     headers = {
@@ -84,7 +65,7 @@ def generateBadge(userid):
         
         if re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify()) == []:
             endOfSheet = True
-            return drawBadge(horribleJerk, str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text()), 0, 'This SQUARE hasn\'t been probated before.')
+            break
 
         username = str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text())
 
@@ -133,9 +114,25 @@ def generateBadge(userid):
     
     if output == '':
         output = 'This SQUARE hasn\'t been probated before.'
-    
-    return drawBadge(horribleJerk,username, calcYears, output)
 
+    uNameFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 16)
+    timeFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 12)
+    noteFont = ImageFont.truetype(f"{scriptPath}/F25_Bank_Printer.ttf", 8)
+
+    img = Image.open(f'{scriptPath}/badgebg_simple.png')
+
+    image_editable = ImageDraw.Draw(img)
+    image_editable.text((100,15), username, (0,0,0), font=uNameFont)
+    image_editable.text((100,35), 'Total time probated*:', (0,0,0), font=timeFont)
+    image_editable.text((100,50), output, (0,0,0), font=timeFont)
+    if calcYears > 1:
+        image_editable.text((100,62), 'Jesus Christ.', (0,0,0), font=timeFont)
+
+    image_editable.text((275,80), '*only counts last 50 probes', (150,150,150), font=timeFont)
+
+    img.save(f'{scriptPath}/badges/{horribleJerk}.png')
+    print(f'{scriptPath}/badges/{horribleJerk}.png')
+    return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
     #return f'<img src="{scriptPath}\\badges\\{horribleJerk}.png">'
 
 
@@ -151,7 +148,6 @@ def api_genbadge():
         else:
             return (generateBadge(int(flask.request.args['userid']))), 201, {'Access-Control-Max-Age': '3600'}
     except (ValueError, AttributeError):
-        pass
-    #    return '<h1>handle <i>this</i> you fucking charlatan</h1><br/><img src="http://goatse.info/hello.jpg">'
+        return '<h1>handle <i>this</i> you fucking charlatan</h1><br/><img src="http://goatse.info/hello.jpg">'
  
 app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
