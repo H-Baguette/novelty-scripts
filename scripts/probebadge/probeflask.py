@@ -93,7 +93,7 @@ def generateBadge(userid):
         elif timesplit[1][0:4] == 'year':
             pyears += int(timesplit[0])
     
-    output = humanize.naturaldelta(dt.timedelta(hours=phours,days=pdays,weeks=pweeks,months=pmonths,years=pyears))
+    output = humanize.naturaldelta(dt.timedelta(hours=phours,days=(pdays + (365 * pyears)),weeks=(pweeks + (4 * pmonths))))
     
     if output == '':
         output = 'This SQUARE hasn\'t been probated before.'
