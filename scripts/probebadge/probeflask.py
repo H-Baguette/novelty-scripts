@@ -57,12 +57,11 @@ def generateBadge(userid):
     requests_cache.install_cache('sa_cache', backend='sqlite', expire_after=21600)
     
     # if the last query was less than 6 hours ago, send a cached image
-    if os.path.exists(f'{scriptPath}/badges/{horribleJerk}.png'):
-        break #DEBUG - REMOVE IN PROD
-        print(str(time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')))
-        if (time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')) < 21600:
-            print('SENDING CACHED IMAGE')
-            return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
+    #if os.path.exists(f'{scriptPath}/badges/{horribleJerk}.png'):
+    #    print(str(time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')))
+    #    if (time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')) < 21600:
+    #        print('SENDING CACHED IMAGE')
+    #        return flask.send_file(f'badges/{horribleJerk}.png', mimetype='image/png')
 
     # query leper's colony
     pageNum = 1
