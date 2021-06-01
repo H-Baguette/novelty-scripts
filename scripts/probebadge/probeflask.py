@@ -143,6 +143,7 @@ def api_genbadge():
         else:
             return (generateBadge(int(flask.request.args['userid']))), 201, {'Access-Control-Max-Age': '3600'}
     except (ValueError, AttributeError):
-        return '<center><h1>Invalid UserID</h1><p>You <i>did</i> enter your UserID, and not your username, <i>right?</i></p><br/><img src="https://i.imgur.com/l0wWcPl.png"></center>'
+        pass
+        #return '<center><h1>Invalid UserID</h1><p>You <i>did</i> enter your UserID, and not your username, <i>right?</i></p><br/><img src="https://i.imgur.com/l0wWcPl.png"></center>'
  
 app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
