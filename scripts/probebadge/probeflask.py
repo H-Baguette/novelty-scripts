@@ -77,7 +77,7 @@ def generateBadge(userid):
         
         try:
             username = str(userProfile.find('dt', title="Registered User").get_text())
-        except KeyError:
+        except (KeyError, AttributeError):
             username = str(userProfile.find('dt', title="Platinum User").get_text())
         #print(soup.prettify())
         
