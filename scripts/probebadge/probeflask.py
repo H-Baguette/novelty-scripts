@@ -77,8 +77,10 @@ def generateBadge(userid):
         
         try:
             username = str(userProfile.find('dt', title="Registered User").get_text())
+            app.logger.error(f'USING REGUSER, USERNAME = {username}')
         except (KeyError, AttributeError):
             username = str(userProfile.find('dt', title="Platinum User").get_text())
+            app.logger.error(f'USING PLATUSER, USERNAME = {username}')
         #print(soup.prettify())
         
         if re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify()) == []:
