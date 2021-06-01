@@ -72,15 +72,10 @@ def generateBadge(userid):
         page = requests.get(URL, headers)
         soup = BeautifulSoup(page.content, 'html.parser')
         
-        userProfileRaw = requests.get(f'https://forums.somethingawful.com/member.php?action=getinfo&userid={str(horribleJerk)}', headers)
+        userProfileRaw = requests.post(f'https://forums.somethingawful.com/member.php', data={'action':'getinfo','userid':str(horribleJerk)}, hearders=headers)
         userProfile = BeautifulSoup(userProfileRaw.content, 'html.parser')
         
-        try:
-            username = str(userProfile.find('dt', title="Registered User").get_text())
-            app.logger.error(f'USING REGUSER, USERNAME = {username}')
-        except (KeyError, AttributeError):
-            username = str(userProfile.find('dt', title="Platinum User").get_text())
-            app.logger.error(f'USING PLATUSER, USERNAME = {username}')
+        username = str(userProfile.find('td', class="info"))
         #print(soup.prettify())
         
         if re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify()) == []:
