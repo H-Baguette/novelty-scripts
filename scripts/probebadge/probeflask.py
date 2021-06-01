@@ -75,13 +75,15 @@ def generateBadge(userid):
         userProfileRaw = requests.get(f'https://forums.somethingawful.com/member.php?action=getinfo&userid={str(horribleJerk)}', headers)
         userProfile = BeautifulSoup(userProfileRaw.content, 'html.parser')
         
+        try:
+            username = str(userProfile.find('dt', title="Registered User").get_text())
+        except KeyError:
+            username = str(userProfile.find('dt', title="Platinum User").get_text())
         #print(soup.prettify())
         
         if re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify()) == []:
             endOfSheet = True
             break
-
-        username = str(userProfile.find('dt', title="Registered User").get_text())
 
         # find probations
         probeScrape = re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify())
