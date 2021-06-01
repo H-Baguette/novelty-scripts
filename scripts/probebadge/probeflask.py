@@ -71,13 +71,17 @@ def generateBadge(userid):
         URL = f"https://forums.somethingawful.com/banlist.php?&sort=&asc=0&adminid=&ban_month=0&ban_year=0&actfilt=-1&userid={horribleJerk}&pagenumber={str(pageNum)}"
         page = requests.get(URL, headers)
         soup = BeautifulSoup(page.content, 'html.parser')
+        
+        userProfileRaw = requests.get(f'https://forums.somethingawful.com/member.php?action=getinfo&userid={str(horribleJerk)}', headers)
+        userProfile = BeautifulSoup(userProfileRaw.content, 'html.parser')
+        
         #print(soup.prettify())
         
         if re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify()) == []:
             endOfSheet = True
             break
 
-        username = str(soup.find('a', href=f'/member.php?s=&action=getinfo&userid={horribleJerk}').get_text())
+        username = str(userProfile.find('dt', title="Registered User").get_text())
 
         # find probations
         probeScrape = re.findall(r'User loses posting privileges for (.*?)\.', soup.prettify())
