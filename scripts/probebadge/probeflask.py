@@ -73,7 +73,7 @@ def generateBadge(userid):
         soup = BeautifulSoup(page.content, 'html.parser')
         
         userProfileRaw = requests.post(f'https://forums.somethingawful.com/member.php', data={'action':'getinfo','userid':str(horribleJerk)}, hearders=headers)
-        userProfile = BeautifulSoup(userProfileRaw.content, 'html.parser')
+        userProfile = BeautifulSoup(userProfileRaw.text, 'html.parser')
         
         username = str(userProfile.find('td', class="info"))
         #print(soup.prettify())
