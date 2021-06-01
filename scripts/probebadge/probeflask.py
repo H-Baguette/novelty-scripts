@@ -58,6 +58,7 @@ def generateBadge(userid):
     
     # if the last query was less than 6 hours ago, send a cached image
     if os.path.exists(f'{scriptPath}/badges/{horribleJerk}.png'):
+        break #DEBUG - REMOVE IN PROD
         print(str(time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')))
         if (time.time() - os.path.getmtime(f'{scriptPath}/badges/{horribleJerk}.png')) < 21600:
             print('SENDING CACHED IMAGE')
